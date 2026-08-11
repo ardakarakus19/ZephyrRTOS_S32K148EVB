@@ -1,0 +1,60 @@
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/pwm/pwm.h>
+#include <zephyr/dt-bindings/adc/adc.h>
+
+/ {
+    aliases {
+        led0 = &led_pte22;
+        sw0 = &button_sw0;
+        pwm-led0 = &pwm_led0;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+        led_pte22: led_0 {
+            /* Kırmızı LED - PTE22 pini */
+            gpios = <&gpioe 22 GPIO_ACTIVE_HIGH>;
+            label = "Red LED PTE22";
+        };
+    };
+
+    buttons {
+        compatible = "gpio-keys";
+        button_sw0: button_0 {
+            /* Buton - PTC12 pini (Dahili Pull-Up ile) */
+            gpios = <&gpioc 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            label = "User Button";
+        };
+    };
+
+    pwmleds {
+        compatible = "pwm-leds";
+        pwm_led0: pwm_led_0 {
+            /* FTM4 Modülü, Kanal 0 */
+            pwms = <&ftm4 0 PWM_MSEC(1) PWM_POLARITY_NORMAL>;
+            label = "PWM LED";
+        };
+    };
+
+    zephyr,user {
+        io-channels = <&adc0 0>; 
+    };
+};
+
+&adc0 {
+    status = "okay";
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    channel@0 {
+        reg = <0>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>; 
+    };
+};
+
+&ftm4 {
+    status = "okay";
+};
