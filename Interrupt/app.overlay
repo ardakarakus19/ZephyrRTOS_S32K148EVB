@@ -1,0 +1,21 @@
+/ {
+    /* Özel kısayollar (aliases) varsa buraya gelir */
+};
+
+/* --- Senin Hatırladığın Pinctrl Yaması --- */
+&pinctrl {
+    adc0_dummy: adc0_dummy {
+    };
+};
+
+&adc0 {
+    status = "okay";
+    pinctrl-0 = <&adc0_dummy>;
+    pinctrl-names = "default";
+};
+/* ----------------------------------------- */
+
+/* Kırmızı LED'in bağlı olduğu FTM4 (PWM) Modülü */
+&ftm4 {
+    status = "okay";
+};
