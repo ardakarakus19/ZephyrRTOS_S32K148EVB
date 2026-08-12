@@ -1,0 +1,7 @@
+r
+h
+loadfile build/zephyr/zephyr.hex
+r
+g
+exit
+

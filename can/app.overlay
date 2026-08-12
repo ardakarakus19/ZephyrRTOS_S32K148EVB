@@ -1,0 +1,10 @@
+&flexcan0 {
+    status = "okay";
+    bitrate = <500000>;
+};
+
+/ {
+    chosen {
+        zephyr,canbus = &flexcan0;
+    };
+};
